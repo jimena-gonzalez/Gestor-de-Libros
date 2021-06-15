@@ -8,11 +8,19 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -21,7 +29,8 @@ public class MenuPrincipalGui {
 	private JFrame frmMenuPrincipal;
 	private static String ruta = "libros.tsv";
 	private JLabel lblSinRegistro;
-	private Vector<Libro> libro;
+	private Vector<Libro> vector = new Vector<Libro>();
+	private TableModel tableModel;
 
 	public MenuPrincipalGui() {
 		initialize();
@@ -38,17 +47,7 @@ public class MenuPrincipalGui {
 		frmMenuPrincipal.getContentPane().setLayout(null);
 		frmMenuPrincipal.setLocationRelativeTo(null);
 
-		Libro dato = null;
-		Vector<Libro> vector = new Vector<Libro>();
-		String[] campos;
-		int[] contador = { 0 };
-		int opcion, subopcion;
-		int i, n;
-
-		Libro libro = null;
 		leerRegistrosPrevios(vector);
-
-		libro = new Libro();
 
 		JButton btnAlta = new JButton("Alta");
 		btnAlta.addActionListener(new ActionListener() {
@@ -122,8 +121,14 @@ public class MenuPrincipalGui {
 		JButton btnListarRegistros = new JButton("Listar registros");
 		btnListarRegistros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				verificarRegistros(vector);
+				if (verificarRegistros(vector)) {
+					ListadoGui listado = new ListadoGui(vector);
+					listado.getFrame().setVisible(true);
+					frmMenuPrincipal.setVisible(false);
+				}
+				return;
 			}
+
 		});
 		btnListarRegistros.setBounds(44, 194, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnListarRegistros);
