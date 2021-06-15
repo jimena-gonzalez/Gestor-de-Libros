@@ -1,3 +1,4 @@
+package com;
 
 public class Usuario {
 	
@@ -40,13 +41,13 @@ public class Usuario {
 		
 	}
 	
-	public int validarUsuario(String user, String pass) {
+	public boolean validarUsuario(String user, String pass) {
 		
 		if(user.equals(username) && pass.equals(password)) {
-			return 0;
+			return true;
 		}
 		
-		return 1;
+		return false;
 		
 	}
 	
