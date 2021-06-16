@@ -24,22 +24,25 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JPanel;
 
-public class ListadoGui {
+public class ListadoGuiOrdenado  {
 
 	private JFrame frame;
 	private Vector<Libro> vector = new Vector<Libro>();
 	private JFrame menu;
-	public ListadoGui(Vector<Libro> vector, JFrame frmPrincipal) {
+	
+	public ListadoGuiOrdenado(Vector<Libro> vector, JFrame frmMenuPrincipal) {
 		this.vector = vector;
-		this.menu=frmPrincipal;
+		this.menu = frmMenuPrincipal;
 		initialize();
 	}
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+	//	frame.setBounds(1000, 1000, 1000, 600);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("LISTADO DE LIBROS");
+		frame.setTitle("LISTADO DE LIBROS ORDENADOS POR ISBN");
+		
 
 		List<String> columns = new ArrayList<String>();
 		columns.add("ISBN");
@@ -48,6 +51,10 @@ public class ListadoGui {
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
 		columns.add("AÑO DE PUBLICACION");
+		
+		
+		
+		
 		List<String[]> values = new ArrayList<String[]>();
 
 		for (int i = 0; i < vector.size(); i++) {
@@ -55,6 +62,14 @@ public class ListadoGui {
 					vector.get(i).getEditorial(), Integer.toString(vector.get(i).getEdicion()),
 					Integer.toString(vector.get(i).getAnno_de_publicacion()) });
 		}
+
+		TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
+		frame.getContentPane().setLayout(null);
+		JTable table = new JTable(tableModel);
+		table.setEnabled(false);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(0, 0, 884, 161);
+		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 
@@ -65,18 +80,13 @@ public class ListadoGui {
 		});
 		btnCancelar.setBounds(380, 170, 89, 23);
 		frame.getContentPane().add(btnCancelar);
-
-		TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
-		frame.getContentPane().setLayout(null);
-		JTable table = new JTable(tableModel);
-		table.setEnabled(false);
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(0, 0, 884, 161);
+		
 		frame.getContentPane().add(scrollPane);
 		frame.getContentPane().add(table.getTableHeader(), BorderLayout.NORTH);
 		frame.setVisible(true);
 		frame.setSize(900, 240);
 		frame.setLocationRelativeTo(null);
+		
 	}
 
 	public Window getFrame() {

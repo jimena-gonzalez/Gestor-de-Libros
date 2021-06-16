@@ -112,7 +112,12 @@ public class MenuPrincipalGui {
 		JButton btnOrdenarRegistros = new JButton("Ordenar registros");
 		btnOrdenarRegistros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				verificarRegistros(vector);
+				vector.sort(null);
+				ListadoGuiOrdenado formulario = new ListadoGuiOrdenado(vector, frmMenuPrincipal);
+				
+				
 			}
 		});
 		btnOrdenarRegistros.setBounds(44, 160, 145, 23);
@@ -122,7 +127,7 @@ public class MenuPrincipalGui {
 		btnListarRegistros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (verificarRegistros(vector)) {
-					ListadoGui listado = new ListadoGui(vector);
+					ListadoGui listado = new ListadoGui(vector, frmMenuPrincipal);
 					listado.getFrame().setVisible(true);
 					frmMenuPrincipal.setVisible(false);
 				}
