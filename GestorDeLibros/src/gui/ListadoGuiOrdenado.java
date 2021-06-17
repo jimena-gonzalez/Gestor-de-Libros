@@ -24,12 +24,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JPanel;
 
-public class ListadoGuiOrdenado  {
+public class ListadoGuiOrdenado {
 
 	private JFrame frame;
 	private Vector<Libro> vector = new Vector<Libro>();
 	private JFrame menu;
-	
+
 	public ListadoGuiOrdenado(Vector<Libro> vector, JFrame frmMenuPrincipal) {
 		this.vector = vector;
 		this.menu = frmMenuPrincipal;
@@ -37,13 +37,14 @@ public class ListadoGuiOrdenado  {
 	}
 
 	private void initialize() {
+		// Define el frame actual
 		frame = new JFrame();
-	//	frame.setBounds(1000, 1000, 1000, 600);
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Ingresa el titulo de la operacion que se realizara
 		frame.setTitle("LISTADO DE LIBROS ORDENADOS POR ISBN");
 		frame.setResizable(false);
-
+		// Se define las columnas a mostrar
 		List<String> columns = new ArrayList<String>();
 		columns.add("ISBN");
 		columns.add("TITULO");
@@ -51,12 +52,11 @@ public class ListadoGuiOrdenado  {
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
 		columns.add("A\u00d1O DE PUBLICACION");
-		
-		
-		
-		
-		List<String[]> values = new ArrayList<String[]>();
 
+		// Se define una coleccion para los valores a mostrar
+		List<String[]> values = new ArrayList<String[]>();
+		// Se procede a cargar los valores a mostrar que provienen de la coleccion de
+		// libros leidos del archivo
 		for (int i = 0; i < vector.size(); i++) {
 			values.add(new String[] { vector.get(i).getISBN(), vector.get(i).getTitulo(), vector.get(i).getAutor(),
 					vector.get(i).getEditorial(), Integer.toString(vector.get(i).getEdicion()),
@@ -69,26 +69,29 @@ public class ListadoGuiOrdenado  {
 		table.setEnabled(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(0, 0, 884, 161);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				// Se muestra el menu
 				menu.setVisible(true);
+				// Se finaliza la pantalla actual
 				frame.dispose();
 			}
 		});
 		btnCancelar.setToolTipText("Volver al menu");
 		btnCancelar.setBounds(380, 170, 89, 23);
+		// Se añade el boton al contenedor del frame
 		frame.getContentPane().add(btnCancelar);
-		
+
 		frame.getContentPane().add(scrollPane);
 		frame.getContentPane().add(table.getTableHeader(), BorderLayout.NORTH);
 		frame.setVisible(true);
 		frame.setSize(900, 240);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-		
+
 	}
 
 	public Window getFrame() {

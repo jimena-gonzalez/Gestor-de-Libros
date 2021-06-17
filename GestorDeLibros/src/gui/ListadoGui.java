@@ -36,12 +36,14 @@ public class ListadoGui {
 	}
 
 	private void initialize() {
+		//Define el frame actual
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//Ingresa el titulo de la operacion que se realizara
 		frame.setTitle("LISTADO DE LIBROS");
-
+		//Se define las columnas a mostrar
 		List<String> columns = new ArrayList<String>();
 		columns.add("ISBN");
 		columns.add("TITULO");
@@ -49,23 +51,29 @@ public class ListadoGui {
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
 		columns.add("A\u00d1O DE PUBLICACION");
+		
+		//Se define una coleccion para los valores a mostrar
 		List<String[]> values = new ArrayList<String[]>();
-
+		//Se procede a cargar los valores a mostrar que provienen de la coleccion de libros leidos del archivo
 		for (int i = 0; i < vector.size(); i++) {
 			values.add(new String[] { vector.get(i).getISBN(), vector.get(i).getTitulo(), vector.get(i).getAutor(),
 					vector.get(i).getEditorial(), Integer.toString(vector.get(i).getEdicion()),
 					Integer.toString(vector.get(i).getAnno_de_publicacion()) });
 		}
+		//Se crea el boton cancelar
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				//Se muestra el menu
 				menu.setVisible(true);
+				//Se finaliza la pantalla actual
 				frame.dispose();
 			}
 		});
 		btnCancelar.setToolTipText("Volver al menu");
 		btnCancelar.setBounds(380, 170, 89, 23);
+		//Se añade el boton al contenedor del frame
 		frame.getContentPane().add(btnCancelar);
 
 		TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
