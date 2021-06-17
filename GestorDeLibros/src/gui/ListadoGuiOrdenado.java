@@ -42,7 +42,7 @@ public class ListadoGuiOrdenado  {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("LISTADO DE LIBROS ORDENADOS POR ISBN");
-		
+		frame.setResizable(false);
 
 		List<String> columns = new ArrayList<String>();
 		columns.add("ISBN");

@@ -41,6 +41,7 @@ public class MenuPrincipalGui {
 	 */
 	private void initialize() {
 		frmMenuPrincipal = new JFrame();
+		frmMenuPrincipal.setResizable(false);
 		frmMenuPrincipal.setTitle("Menu");
 		frmMenuPrincipal.setBounds(100, 100, 244, 390);
 		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
