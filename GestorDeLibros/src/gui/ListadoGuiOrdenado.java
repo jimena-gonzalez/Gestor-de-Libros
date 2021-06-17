@@ -85,6 +85,7 @@ public class ListadoGuiOrdenado  {
 		frame.getContentPane().add(table.getTableHeader(), BorderLayout.NORTH);
 		frame.setVisible(true);
 		frame.setSize(900, 240);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
 	}

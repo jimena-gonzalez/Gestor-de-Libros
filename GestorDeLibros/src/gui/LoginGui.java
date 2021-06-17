@@ -11,12 +11,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
 
 public class LoginGui {
 
 	private JFrame frame;
 	private JTextField textFieldUser;
-	private JTextField textPassword;
+	private JPasswordField passwordField;
 	private JLabel lblError;
 
 	/**
@@ -56,7 +58,7 @@ public class LoginGui {
 		lblError = new JLabel("");
 		lblError.setHorizontalAlignment(SwingConstants.CENTER);
 		lblError.setForeground(Color.RED);
-		lblError.setBounds(10, 96, 212, 14);
+		lblError.setBounds(12, 113, 212, 14);
 		frame.getContentPane().add(lblError);
 		lblError.setVisible(true);
 
@@ -65,12 +67,12 @@ public class LoginGui {
 			public void actionPerformed(ActionEvent e) {
 				Usuario userDefault = new Usuario();
 				String usuarioText = textFieldUser.getText();
-				String passwordText = textPassword.getText();
+				String passwordText = new String(passwordField.getPassword());
 
 				if (usuarioText.length() == 0 || passwordText.length() == 0) {
 					lblError.setText("Se deben completar ambos campos");
 					textFieldUser.setText("");
-					textPassword.setText("");
+					passwordField.setText("");
 					lblError.setVisible(true);
 				} else {
 					if (userDefault.validarUsuario(usuarioText, passwordText)) {
@@ -80,14 +82,14 @@ public class LoginGui {
 					}else{
 						lblError.setText("Usuario o contrase\u00f1a incorrecto");
 						textFieldUser.setText("");
-						textPassword.setText("");
+						passwordField.setText("");
 						lblError.setVisible(true);
 					}
 				}
 
 			}
 		});
-		btnAceptar.setBounds(24, 121, 89, 23);
+		btnAceptar.setBounds(24, 135, 89, 23);
 		frame.getContentPane().add(btnAceptar);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -96,7 +98,7 @@ public class LoginGui {
 				System.exit(1);
 			}
 		});
-		btnCancelar.setBounds(133, 121, 89, 23);
+		btnCancelar.setBounds(133, 135, 89, 23);
 		frame.getContentPane().add(btnCancelar);
 
 		textFieldUser = new JTextField();
@@ -105,11 +107,25 @@ public class LoginGui {
 		frame.getContentPane().add(textFieldUser);
 		textFieldUser.setColumns(10);
 
-		textPassword = new JTextField();
-		textPassword.setText("pass123");
-		textPassword.setBounds(94, 60, 128, 20);
-		frame.getContentPane().add(textPassword);
-		textPassword.setColumns(10);
+		passwordField = new JPasswordField();
+		passwordField.setText("pass123");
+		passwordField.setBounds(94, 60, 128, 20);
+		frame.getContentPane().add(passwordField);
+		passwordField.setColumns(0);
+		
+		JCheckBox showPassCheckBox = new JCheckBox("Mostrar Password");
+		showPassCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(showPassCheckBox.isSelected()) {
+					passwordField.setEchoChar((char)0);
+				} else {
+					passwordField.setEchoChar('*');
+				}
+			}
+		});
+		showPassCheckBox.setToolTipText("Tildar = mostrar");
+		showPassCheckBox.setBounds(94, 85, 131, 23);
+		frame.getContentPane().add(showPassCheckBox);
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setBounds(10, 25, 74, 14);
