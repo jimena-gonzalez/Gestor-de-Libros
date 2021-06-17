@@ -50,6 +50,7 @@ public class LoginGui {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
+		frame.setTitle("Gestor");
 		frame.setBounds(100, 100, 267, 204);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -89,6 +90,7 @@ public class LoginGui {
 
 			}
 		});
+		btnAceptar.setToolTipText("Ingresar");
 		btnAceptar.setBounds(24, 135, 89, 23);
 		frame.getContentPane().add(btnAceptar);
 
@@ -98,6 +100,7 @@ public class LoginGui {
 				System.exit(1);
 			}
 		});
+		btnCancelar.setToolTipText("Salir del programa");
 		btnCancelar.setBounds(133, 135, 89, 23);
 		frame.getContentPane().add(btnCancelar);
 

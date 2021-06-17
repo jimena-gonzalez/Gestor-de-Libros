@@ -59,7 +59,7 @@ public class MenuPrincipalGui {
 				frmMenuPrincipal.setVisible(false);
 			}
 		});
-
+		btnAlta.setToolTipText("Agregar nuevo libro.");
 		btnAlta.setBounds(44, 24, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnAlta);
 
@@ -76,6 +76,7 @@ public class MenuPrincipalGui {
 
 			}
 		});
+		btnConsulta.setToolTipText("Consultar datos de un libro registrado, dado su ISBN.");
 		btnConsulta.setBounds(44, 58, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnConsulta);
 
@@ -92,6 +93,7 @@ public class MenuPrincipalGui {
 
 			}
 		});
+		btnActualizacion.setToolTipText("Modificar datos de un libro registrado.");
 		btnActualizacion.setBounds(44, 92, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnActualizacion);
 
@@ -107,6 +109,7 @@ public class MenuPrincipalGui {
 				return;
 			}
 		});
+		btnBaja.setToolTipText("Eliminar nuevo libro, dado su ISBN.");
 		btnBaja.setBounds(44, 126, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnBaja);
 
@@ -121,6 +124,7 @@ public class MenuPrincipalGui {
 				
 			}
 		});
+		btnOrdenarRegistros.setToolTipText("Ordenar registros de forma ascendente");
 		btnOrdenarRegistros.setBounds(44, 160, 145, 23);
 		frmMenuPrincipal.getContentPane().add(btnOrdenarRegistros);
 
@@ -137,6 +141,7 @@ public class MenuPrincipalGui {
 
 		});
 		btnListarRegistros.setBounds(44, 194, 145, 23);
+		btnListarRegistros.setToolTipText("Mostrar libros registrados");
 		frmMenuPrincipal.getContentPane().add(btnListarRegistros);
 
 		JButton btnSalir = new JButton("Salir");
@@ -146,6 +151,7 @@ public class MenuPrincipalGui {
 			}
 		});
 		btnSalir.setBounds(44, 274, 145, 23);
+		btnSalir.setToolTipText("Salir del programa");
 		frmMenuPrincipal.getContentPane().add(btnSalir);
 
 		lblSinRegistro = new JLabel("No hay registros");

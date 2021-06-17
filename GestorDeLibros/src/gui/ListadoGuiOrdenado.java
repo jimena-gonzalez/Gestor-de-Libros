@@ -78,6 +78,7 @@ public class ListadoGuiOrdenado  {
 				frame.dispose();
 			}
 		});
+		btnCancelar.setToolTipText("Volver al menu");
 		btnCancelar.setBounds(380, 170, 89, 23);
 		frame.getContentPane().add(btnCancelar);
 		

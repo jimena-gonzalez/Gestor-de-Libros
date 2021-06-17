@@ -181,6 +181,7 @@ public class AbmGui {
 
 		});
 		btnNewButton.setBounds(148, 204, 89, 23);
+		btnNewButton.setToolTipText("Confirmar acción");
 		frame.getContentPane().add(btnNewButton);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -192,6 +193,7 @@ public class AbmGui {
 			}
 		});
 		btnCancelar.setBounds(250, 204, 89, 23);
+		btnCancelar.setToolTipText("Volver al menu sin aplicar la accion.");
 		frame.getContentPane().add(btnCancelar);
 
 		btnBuscar = new JButton("Buscar");
