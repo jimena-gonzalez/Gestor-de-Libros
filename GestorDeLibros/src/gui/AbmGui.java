@@ -310,7 +310,7 @@ public class AbmGui {
 			Integer.parseInt(this.textFieldEdicion.getText());
 			Integer.parseInt(this.textFieldAnioPublicacion.getText());
 		} catch (NumberFormatException e) {
-			lblResultado.setText("edici�n y a�o de publicacion deben ser num�ricos");
+			lblResultado.setText("Edici\u00F3n y A\u00F1o de publicacion deben ser num\u00e9ricos");
 			lblResultado.setVisible(true);
 			return false;
 		}

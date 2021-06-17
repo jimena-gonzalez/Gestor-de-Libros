@@ -23,7 +23,7 @@ public class Libro implements Comparable<Libro> {
 	public String toString() {
 		return "ISBN               : " + ISBN + "\n" + "titulo             : " + titulo + "\n" + "autor              : "
 				+ autor + "\n" + "editorial          : " + editorial + "\n" + "edicion            : " + edicion + "\n"
-				+ "anno de publicacion: " + anno_de_publicacion + "\n";
+				+ "a\\u00f1o de publicacion: " + anno_de_publicacion + "\n";
 	}
 
 	public String getISBN() {

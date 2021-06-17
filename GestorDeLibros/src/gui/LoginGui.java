@@ -78,7 +78,7 @@ public class LoginGui {
 						menuGui.getFrame().setVisible(true);
 						frame.dispose();
 					}else{
-						lblError.setText("Usuario o contraseña incorrecto");
+						lblError.setText("Usuario o contrase\u00f1a incorrecto");
 						textFieldUser.setText("");
 						textPassword.setText("");
 						lblError.setVisible(true);

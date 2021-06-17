@@ -50,7 +50,7 @@ public class ListadoGuiOrdenado  {
 		columns.add("AUTOR");
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
-		columns.add("AÑO DE PUBLICACION");
+		columns.add("A\u00d1O DE PUBLICACION");
 		
 		
 		

@@ -47,7 +47,7 @@ public class ListadoGui {
 		columns.add("AUTOR");
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
-		columns.add("AÑO DE PUBLICACION");
+		columns.add("A\u00d1O DE PUBLICACION");
 		List<String[]> values = new ArrayList<String[]>();
 
 		for (int i = 0; i < vector.size(); i++) {
