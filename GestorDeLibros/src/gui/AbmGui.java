@@ -393,6 +393,7 @@ public class AbmGui {
 		libroAux.setTitulo(titulo);
 		libroAux.setAutor(autor);
 		libroAux.setEditorial(editorial);
+		libroAux.setEdicion(edicion);
 		libroAux.setAnno_de_publicacion(annoPublicacion);
 	}
 	//Funcion encargada de grabar los datos de la coleccion en un archivo
