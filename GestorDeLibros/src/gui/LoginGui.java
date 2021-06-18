@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.PrintStream;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -28,6 +29,8 @@ public class LoginGui {
 	private JLabel lblError;
 	// Clase main de toda la aplicacion de ABM, es el punt ode inicio de la
 	// aplcaicion
+	private static String rutaLog = "logSeguimiento.log";
+	private static PrintStream logSalida = null;
 
 	/**
 	 * Launch the application.
@@ -36,6 +39,7 @@ public class LoginGui {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					logSalida = new PrintStream(rutaLog);
 					LoginGui window = new LoginGui();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -89,7 +93,7 @@ public class LoginGui {
 		btnAceptar.addActionListener(new ActionListener() {
 			// Se define un evento para el boton aceptar
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton aceptar");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton aceptar de login");
 				// Se crear un objeto usuario para comparar los datos ingresados por el usuario
 				// y verificar si el login es correcto
 				Usuario userDefault = new Usuario();
@@ -134,6 +138,7 @@ public class LoginGui {
 		btnCancelar.addActionListener(new ActionListener() {
 			// Se procede a cerrar la aplicacion si se oprime el boton cancelar.
 			public void actionPerformed(ActionEvent e) {
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton cancelar de login");
 				System.exit(1);
 			}
 		});

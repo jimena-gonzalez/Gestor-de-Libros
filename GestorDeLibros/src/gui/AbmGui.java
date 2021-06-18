@@ -46,6 +46,8 @@ public class AbmGui {
 	private String editorial;
 	private int edicion;
 	private int annoPublicacion;
+	private static String rutaLog = "logSeguimiento.log";
+	private static PrintStream logSalida = null;
 
 	// Constructor de la clase AbmGui
 	public AbmGui(int opcion, Vector<Libro> libros, JFrame frmMenuPrincipal) {
@@ -55,6 +57,13 @@ public class AbmGui {
 		this.libros = libros;
 		// Referencia al menu principal
 		this.menu = frmMenuPrincipal;
+
+		try {
+			this.logSalida = new PrintStream(rutaLog);
+		} catch (FileNotFoundException e) {
+			logSalida.println(java.time.LocalTime.now() + "->" + "Error al crear el archivo");
+		}
+
 		initialize();
 	}
 
@@ -174,7 +183,7 @@ public class AbmGui {
 		// Se añade un evento
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se presiono el boton aceptar de pantalla ABM");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se presiono el boton aceptar de pantalla ABM");
 				// Dependiendo de la opcion elegida en el menu realizara diferentes opciones
 				// opcion 2 -> CONSULTA
 				if (opcion == 2) {
@@ -186,12 +195,15 @@ public class AbmGui {
 				}
 				// Se verifica si los datos ingresados a los campos de input son correctos
 				// En caso de error se muestra el mismo al usuario
-				if (!verificarCampos())
-					return;
+				// if (!verificarCampos())
+				// return;
 				// opcion 1 -> ALTA
 				// Se procede a carga los datos para el alta del libro
-				if (opcion == 1)
-					alta();
+				if (opcion == 1) {
+					if (!alta())
+						return;
+				}
+
 				// opcion 3 -> ACTUALIZAR
 				// Se procede a cambiar si se decide los datos de un libro
 				if (opcion == 3)
@@ -219,7 +231,7 @@ public class AbmGui {
 		// Se añade un evento
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se presiono el boton cancelar de pantalla ABM");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se presiono el boton cancelar de pantalla ABM");
 				// Se muestra el menu
 				menu.setVisible(true);
 				// Se finaliza la pantalla de ABM
@@ -235,7 +247,7 @@ public class AbmGui {
 		// Se añade un evento
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se presiono el boton buscar de pantalla ABM");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se presiono el boton buscar de pantalla ABM");
 				// Se inicializa el label de resultado
 				lblResultado.setText("");
 				// Se crea un objeto libro donde se almacenara el libro buscado si se encuentra
@@ -324,11 +336,32 @@ public class AbmGui {
 	}
 
 	// Metodo que realiza el alta de un nuevo libro
-	private void alta() {
-		// inserta los datos en un objeto libro
+	private boolean alta() {
+		// Se obtiene los valores de los inputs
+		titulo = textFieldTitulo.getText();
+		autor = textFieldAutor.getText();
+		editorial = textFieldEditorial.getText();
+		// Verifica que sean vacios, en caso de ser asi se procede a informar al usuario
+		if (titulo.length() == 0 || editorial.length() == 0 || autor.length() == 0 || titulo.length() == 0
+				|| textFieldAnioPublicacion.getText().length() == 0 || textFieldEditorial.getText().length() == 0) {
+			lblResultado.setText("Debe completar todos los campos");
+			return false;
+		}
+		// Verifica que los campos de edicion y año de publicacion sean numericos, en
+		// caso de no ser asi se informa
+		if (!esNumerico()) {
+			return false;
+		}
+		// Se obtiene los valores de los inputs
+		edicion = Integer.parseInt(textFieldEdicion.getText());
+		annoPublicacion = Integer.parseInt(textFieldAnioPublicacion.getText());
+
 		insertarDatos();
-		// añade el libro a la coleccion de libros a grabar
 		libros.add(libroAux);
+		return true;
+
+		// inserta los datos en un objeto libro
+		// añade el libro a la coleccion de libros a grabar
 	}
 
 	// Metodo que completa los campos de input con los datos obtenidos del archivo
@@ -357,7 +390,8 @@ public class AbmGui {
 	private void darBaja() {
 		libros.remove(libroAux);
 	}
-	//Funcion que bloquea los inputs para el usuario
+
+	// Funcion que bloquea los inputs para el usuario
 	private void bloquearInputs() {
 		this.textFieldTitulo.setEnabled(false);
 		this.textFieldAutor.setEnabled(false);
@@ -366,21 +400,24 @@ public class AbmGui {
 		this.textFieldAnioPublicacion.setEnabled(false);
 
 	}
-	//Funcion que verifica que los campos de edicion y anio de publicacion sean numericos
+
+	// Funcion que verifica que los campos de edicion y anio de publicacion sean
+	// numericos
 	private boolean esNumerico() {
 		try {
-			//Se intenta parsear los datos a un Integer
+			// Se intenta parsear los datos a un Integer
 			Integer.parseInt(this.textFieldEdicion.getText());
 			Integer.parseInt(this.textFieldAnioPublicacion.getText());
 		} catch (NumberFormatException e) {
-			//En caso de no poder parsear los datos se procede a informar al usario
+			// En caso de no poder parsear los datos se procede a informar al usario
 			lblResultado.setText("Edici\u00F3n y A\u00F1o de publicacion deben ser num\u00e9ricos");
 			lblResultado.setVisible(true);
 			return false;
 		}
 		return true;
 	}
-	//Activa los inputs previamente bloqueados
+
+	// Activa los inputs previamente bloqueados
 	private void activarCampos() {
 		this.textFieldTitulo.setEnabled(true);
 		this.textFieldAutor.setEnabled(true);
@@ -388,23 +425,26 @@ public class AbmGui {
 		this.textFieldEdicion.setEnabled(true);
 		this.textFieldAnioPublicacion.setEnabled(true);
 	}
-	//Ingresa los datos a un objeto libroAux para la actualizion del archivo
+
+	// Ingresa los datos a un objeto libroAux para la actualizion del archivo
 	private void insertarDatos() {
 		libroAux.setTitulo(titulo);
 		libroAux.setAutor(autor);
 		libroAux.setEditorial(editorial);
 		libroAux.setAnno_de_publicacion(annoPublicacion);
+		libroAux.setEdicion(edicion);
 	}
-	//Funcion encargada de grabar los datos de la coleccion en un archivo
+
+	// Funcion encargada de grabar los datos de la coleccion en un archivo
 	private void grabarInformacion(Funcion<Libro> imprimirEnArchivo) {
 		PrintStream salida = null;
 		try {
 			salida = new PrintStream(ruta);
-			//Se encarga de recorrer la collecion y graba en el archivo
+			// Se encarga de recorrer la collecion y graba en el archivo
 			for (int i = 0; i < libros.size(); i++) {
 				imprimirEnArchivo.funcion(libros.get(i), salida);
 			}
-			//Cierra el stream del archivo de salida
+			// Cierra el stream del archivo de salida
 			salida.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

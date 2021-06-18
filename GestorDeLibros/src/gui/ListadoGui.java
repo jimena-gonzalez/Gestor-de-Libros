@@ -22,6 +22,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 import javax.swing.JPanel;
 
 public class ListadoGui {
@@ -29,21 +32,29 @@ public class ListadoGui {
 	private JFrame frame;
 	private Vector<Libro> vector = new Vector<Libro>();
 	private JFrame menu;
+	private static String rutaLog = "logSeguimiento.log";
+	private static PrintStream logSalida = null;
+
 	public ListadoGui(Vector<Libro> vector, JFrame frmPrincipal) {
 		this.vector = vector;
-		this.menu=frmPrincipal;
+		this.menu = frmPrincipal;
+		try {
+			this.logSalida = new PrintStream(rutaLog);
+		} catch (FileNotFoundException e) {
+			logSalida.println(java.time.LocalTime.now() + "->" + "Error al crear el archivo");
+		}
 		initialize();
 	}
 
 	private void initialize() {
-		//Define el frame actual
+		// Define el frame actual
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//Ingresa el titulo de la operacion que se realizara
+		// Ingresa el titulo de la operacion que se realizara
 		frame.setTitle("LISTADO DE LIBROS");
-		//Se define las columnas a mostrar
+		// Se define las columnas a mostrar
 		List<String> columns = new ArrayList<String>();
 		columns.add("ISBN");
 		columns.add("TITULO");
@@ -51,29 +62,30 @@ public class ListadoGui {
 		columns.add("EDITORIAL");
 		columns.add("EDICION");
 		columns.add("A\u00d1O DE PUBLICACION");
-		
-		//Se define una coleccion para los valores a mostrar
+
+		// Se define una coleccion para los valores a mostrar
 		List<String[]> values = new ArrayList<String[]>();
-		//Se procede a cargar los valores a mostrar que provienen de la coleccion de libros leidos del archivo
+		// Se procede a cargar los valores a mostrar que provienen de la coleccion de
+		// libros leidos del archivo
 		for (int i = 0; i < vector.size(); i++) {
 			values.add(new String[] { vector.get(i).getISBN(), vector.get(i).getTitulo(), vector.get(i).getAutor(),
 					vector.get(i).getEditorial(), Integer.toString(vector.get(i).getEdicion()),
 					Integer.toString(vector.get(i).getAnno_de_publicacion()) });
 		}
-		//Se crea el boton cancelar
+		// Se crea el boton cancelar
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-				//Se muestra el menu
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se presiono el boton cancelar en la pantalla de listado de registros");
+				// Se muestra el menu
 				menu.setVisible(true);
-				//Se finaliza la pantalla actual
+				// Se finaliza la pantalla actual
 				frame.dispose();
 			}
 		});
 		btnCancelar.setToolTipText("Volver al menu");
 		btnCancelar.setBounds(380, 170, 89, 23);
-		//Se añade el boton al contenedor del frame
+		// Se añade el boton al contenedor del frame
 		frame.getContentPane().add(btnCancelar);
 
 		TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());

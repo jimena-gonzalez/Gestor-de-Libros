@@ -22,6 +22,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 import javax.swing.JPanel;
 
 public class ListadoGuiOrdenado {
@@ -29,10 +32,17 @@ public class ListadoGuiOrdenado {
 	private JFrame frame;
 	private Vector<Libro> vector = new Vector<Libro>();
 	private JFrame menu;
+	private static String rutaLog = "logSeguimiento.log";
+	private static PrintStream logSalida = null;
 
 	public ListadoGuiOrdenado(Vector<Libro> vector, JFrame frmMenuPrincipal) {
 		this.vector = vector;
 		this.menu = frmMenuPrincipal;
+		try {
+			this.logSalida = new PrintStream(rutaLog);
+		} catch (FileNotFoundException e) {
+			logSalida.println(java.time.LocalTime.now() + "->" + "Error al crear el archivo");
+		}
 		initialize();
 	}
 
@@ -74,6 +84,8 @@ public class ListadoGuiOrdenado {
 		btnCancelar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				logSalida.println(java.time.LocalTime.now() + "->"
+						+ "Se presiono el boton cancelar en la pantalla de listado de registros");
 				// Se muestra el menu
 				menu.setVisible(true);
 				// Se finaliza la pantalla actual

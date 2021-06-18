@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -37,6 +38,8 @@ public class MenuPrincipalGui {
 	// en la aplicacion.
 	private Vector<Libro> vector = new Vector<Libro>();
 	private TableModel tableModel;
+	private static String rutaLog = "logSeguimiento.log";
+	private static PrintStream logSalida = null;
 
 	// Constructor de la clase
 	public MenuPrincipalGui() {
@@ -49,6 +52,11 @@ public class MenuPrincipalGui {
 	// Se inicializan los diferentes componentes y se definen las acciones de los
 	// botones
 	private void initialize() {
+		try {
+			logSalida = new PrintStream(rutaLog);
+		} catch (FileNotFoundException e1) {
+			logSalida.println(java.time.LocalTime.now() + "->" + "Error al crear el archivo");
+		}
 		// Personalizacion de componente frame del menu de la aplicacion
 		frmMenuPrincipal = new JFrame();
 		frmMenuPrincipal.setResizable(false);
@@ -65,7 +73,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de alta
 		btnAlta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de alta del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de alta del menu");
 				// En caso de seleccionar el boton de alta se crea la ventana de ABM
 				AbmGui abm = new AbmGui(1, vector, frmMenuPrincipal);
 				// Se ingresa el titulo de la pantalla generada, para indicar que operacion se
@@ -86,7 +94,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de consulta
 		btnConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de consulta del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de consulta del menu");
 				// Se llama al metodo para verificar la existencia registros previos
 				if (verificarRegistros(vector)) {
 					// Si existen registros previos se procede a crear la pantalla de consulta
@@ -110,7 +118,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de actualizacion del menu
 		btnActualizacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de actualizacion del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de actualizacion del menu");
 				// Se llama al metodo para verificar la existencia registros previos
 				if (verificarRegistros(vector)) {
 					// Si existen registros previos se procede a crear la pantalla de actualizacion
@@ -134,7 +142,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de baja
 		btnBaja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de baja del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de baja del menu");
 				// Si existen registros previos se procede a crear la pantalla de actualizacion
 				if (verificarRegistros(vector)) {
 					// Si existen registros previos se procede a crear la pantalla de baja
@@ -158,7 +166,7 @@ public class MenuPrincipalGui {
 		btnOrdenarRegistros.addActionListener(new ActionListener() {
 			// Se añade un evento al boton de ordenar registros
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de ordenar registros del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de ordenar registros del menu");
 				// Se verifica la exitencia de registros previos
 				if (verificarRegistros(vector)) {
 					// Se procede a ordenar los datos almacenados en la coleccion
@@ -179,7 +187,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de listar registros
 		btnListarRegistros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton de listar registros del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de listar registros del menu");
 				// Se verifica la exitencia de registros previos
 				if (verificarRegistros(vector)) {
 					// Se crea la pantalla de listado
@@ -203,7 +211,7 @@ public class MenuPrincipalGui {
 		// Se añade un evento al boton de salir del menu de la aplicacion
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Se oprimio el boton salir del menu");
+				logSalida.println(java.time.LocalTime.now() + "->" + "Se oprimio el boton de listar del menu");
 				// Termina la ejecucion de la aplicacion
 				System.exit(0);
 			}
@@ -257,7 +265,7 @@ public class MenuPrincipalGui {
 		// Si no se encontraron datos muestra el mensaje al usuario en el menu principal
 		if (vector.isEmpty()) {
 			this.lblSinRegistro.setVisible(true);
-			System.out.println("No hay registros.\n");
+			this.logSalida.println(java.time.LocalTime.now() + "->" +"No se encotraron registros previos");
 			return false;
 		}
 		this.lblSinRegistro.setVisible(false);
