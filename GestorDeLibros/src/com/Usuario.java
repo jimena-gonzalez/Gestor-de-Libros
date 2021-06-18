@@ -45,13 +45,7 @@ public class Usuario {
 	// Metodo encargar de validar el objeto actual datos pasados por parametros
 	// Utilizado para verificar la igualdad de usuario y password
 	public boolean validarUsuario(String user, String pass) {
-
-		if (user.equals(username) && pass.equals(password)) {
-			return true;
-		}
-
-		return false;
-
+		return user.equals(username) && pass.equals(password);
 	}
 
 }

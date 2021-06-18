@@ -431,6 +431,7 @@ public class AbmGui {
 		libroAux.setTitulo(titulo);
 		libroAux.setAutor(autor);
 		libroAux.setEditorial(editorial);
+		libroAux.setEdicion(edicion);
 		libroAux.setAnno_de_publicacion(annoPublicacion);
 		libroAux.setEdicion(edicion);
 	}
