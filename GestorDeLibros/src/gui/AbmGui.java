@@ -206,8 +206,10 @@ public class AbmGui {
 
 				// opcion 3 -> ACTUALIZAR
 				// Se procede a cambiar si se decide los datos de un libro
-				if (opcion == 3)
-					actualizar();
+				if (opcion == 3) {
+					if (!actualizar())
+						return;
+				}
 				// opcion 4 -> DAR DE BAJA
 				// Se procede ingresar el libro a eliminar
 				if (opcion == 4)
@@ -364,6 +366,31 @@ public class AbmGui {
 		// añade el libro a la coleccion de libros a grabar
 	}
 
+	// Funcion que permite actualizar los campos de un libro
+	private boolean actualizar() {
+		titulo = textFieldTitulo.getText();
+		autor = textFieldAutor.getText();
+		editorial = textFieldEditorial.getText();
+		// Verifica que sean vacios, en caso de ser asi se procede a informar al usuario
+		if (titulo.length() == 0 || editorial.length() == 0 || autor.length() == 0 || titulo.length() == 0
+				|| textFieldAnioPublicacion.getText().length() == 0 || textFieldEditorial.getText().length() == 0) {
+			lblResultado.setText("Debe completar todos los campos");
+			return false;
+		}
+		// Verifica que los campos de edicion y año de publicacion sean numericos, en
+		// caso de no ser asi se informa
+		if (!esNumerico()) {
+			return false;
+		}
+		// Se obtiene los valores de los inputs
+		edicion = Integer.parseInt(textFieldEdicion.getText());
+		annoPublicacion = Integer.parseInt(textFieldAnioPublicacion.getText());
+
+		// inserta los datos en un objeto libro
+		insertarDatos();
+		return true;
+	}
+
 	// Metodo que completa los campos de input con los datos obtenidos del archivo
 	private void consultar() {
 		// Ingresa el dato en campo correspondiente
@@ -378,12 +405,6 @@ public class AbmGui {
 	private void mostrar() {
 		this.textFieldISBN.setEnabled(false);
 		consultar();
-	}
-
-	// Funcion que permite actualizar los campos de un libro
-	private void actualizar() {
-		// inserta los datos en un objeto libro
-		insertarDatos();
 	}
 
 	// Funcion que elimina un libro especifico de la coleccion a grabar
