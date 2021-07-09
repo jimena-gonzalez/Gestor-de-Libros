@@ -461,24 +461,22 @@ public class AbmGui {
 			return false;
 		}
 		
-		int[] numbers = {0,1,2,3,4,5,6,7,8,9};
-		for (int i : numbers) {
-			if(titulo.contains(Integer.toString(i))) {
-				lblResultado.setText("Debe ingresar solo letras en campo Título");
-				lblResultado.setVisible(true);
-				return false;
-			}
-			if(autor.contains(Integer.toString(i))) {
-				lblResultado.setText("Debe ingresar solo letras en campo Autor");
-				lblResultado.setVisible(true);
-				return false;
-			}
-			if(editorial.contains(Integer.toString(i))) {
-				lblResultado.setText("Debe ingresar solo letras en campo Editorial");
-				lblResultado.setVisible(true);
-				return false;
-			}
+		if(!titulo.matches("^[a-zA-Z]+$")) {
+			lblResultado.setText("Debe ingresar solo letras en campo Título");
+			lblResultado.setVisible(true);
+			return false;
 		}
+		if(!autor.matches("^[a-zA-Z]+$")) {
+			lblResultado.setText("Debe ingresar solo letras en campo Autor");
+			lblResultado.setVisible(true);
+			return false;
+		}
+		if(!editorial.matches("^[a-zA-Z]+$")) {
+			lblResultado.setText("Debe ingresar solo letras en campo Editorial");
+			lblResultado.setVisible(true);
+			return false;
+		}
+		
 		return true;
 	}
 
