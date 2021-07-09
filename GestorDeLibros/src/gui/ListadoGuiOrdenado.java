@@ -68,7 +68,7 @@ public class ListadoGuiOrdenado {
 		// Se procede a cargar los valores a mostrar que provienen de la coleccion de
 		// libros leidos del archivo
 		for (int i = 0; i < vector.size(); i++) {
-			values.add(new String[] { vector.get(i).getISBN(), vector.get(i).getTitulo(), vector.get(i).getAutor(),
+			values.add(new String[] { Long.toString(vector.get(i).getISBN()), vector.get(i).getTitulo(), vector.get(i).getAutor(),
 					vector.get(i).getEditorial(), Integer.toString(vector.get(i).getEdicion()),
 					Integer.toString(vector.get(i).getAnno_de_publicacion()) });
 		}

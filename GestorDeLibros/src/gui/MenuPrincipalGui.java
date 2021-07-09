@@ -244,7 +244,7 @@ public class MenuPrincipalGui {
 				campos = entrada.nextLine().split("\t");
 				// Ingresa un nuevo dato del archivo
 				libro = new Libro();
-				libro.setISBN(campos[0]);
+				libro.setISBN(Long.parseLong(campos[0]));
 				libro.setTitulo(campos[1]);
 				libro.setAutor(campos[2]);
 				libro.setEditorial(campos[3]);

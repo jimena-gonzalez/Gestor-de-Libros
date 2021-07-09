@@ -2,7 +2,7 @@ package com;
 
 public class Libro implements Comparable<Libro> {
 
-	private String ISBN;
+	private long ISBN;
 	private String titulo;
 	private String autor;
 	private String editorial;
@@ -11,12 +11,12 @@ public class Libro implements Comparable<Libro> {
 
 	@Override
 	public boolean equals(Object libro) {
-		return this == libro || (libro instanceof Libro && ISBN.equals(((Libro) libro).ISBN));
+		return this == libro || (libro instanceof Libro && ISBN == ((Libro) libro).ISBN);
 	}
 
 	@Override
 	public int compareTo(Libro libro) {
-		return ISBN.compareTo(libro.ISBN);
+		return ISBN == libro.ISBN?0:-1;
 	}
 
 	@Override
@@ -26,11 +26,11 @@ public class Libro implements Comparable<Libro> {
 				+ "a\\u00f1o de publicacion: " + anno_de_publicacion + "\n";
 	}
 
-	public String getISBN() {
+	public long getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(String ISBN) {
+	public void setISBN(long ISBN) {
 		this.ISBN = ISBN;
 	}
 

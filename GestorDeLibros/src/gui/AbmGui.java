@@ -4,7 +4,7 @@ import com.Libro;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
+import javax.swing.JSpinner.DateEditor;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -12,6 +12,7 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.sql.Date;
 import java.awt.Font;
 
 //Clase donde se define la pantalla de ABM
@@ -254,8 +255,17 @@ public class AbmGui {
 				lblResultado.setText("");
 				// Se crea un objeto libro donde se almacenara el libro buscado si se encuentra
 				Libro dato = new Libro();
-				// Se ingresa el ISBN para buscar el libro
-				dato.setISBN(textFieldISBN.getText());
+				try {
+					if(textFieldISBN.getText().length() != 13) {
+						lblResultado.setText("Debe ingresar 13 dígitos si o si en ISBN.");
+						return;
+					}
+					//Se ingresa el ISBN para buscar el libro
+					dato.setISBN(Long.parseLong(textFieldISBN.getText()));
+				} catch (NumberFormatException e2) {
+					lblResultado.setText("Debe ingresar sólo números enteros en ISBN.");
+					return;
+				}
 				// Se procede a buscar el libro en la coleccion
 				int i = libros.indexOf(dato);
 				// Si no se encuentra este null, o se devolvera el libro encotrado
@@ -319,6 +329,7 @@ public class AbmGui {
 		titulo = textFieldTitulo.getText();
 		autor = textFieldAutor.getText();
 		editorial = textFieldEditorial.getText();
+		
 		// Verifica que sean vacios, en caso de ser asi se procede a informar al usuario
 		if (titulo.length() == 0 || editorial.length() == 0 || autor.length() == 0 || titulo.length() == 0
 				|| textFieldAnioPublicacion.getText().length() == 0 || textFieldEditorial.getText().length() == 0) {
@@ -343,6 +354,7 @@ public class AbmGui {
 		titulo = textFieldTitulo.getText();
 		autor = textFieldAutor.getText();
 		editorial = textFieldEditorial.getText();
+		
 		// Verifica que sean vacios, en caso de ser asi se procede a informar al usuario
 		if (titulo.length() == 0 || editorial.length() == 0 || autor.length() == 0 || titulo.length() == 0
 				|| textFieldAnioPublicacion.getText().length() == 0 || textFieldEditorial.getText().length() == 0) {
@@ -425,15 +437,47 @@ public class AbmGui {
 	// Funcion que verifica que los campos de edicion y anio de publicacion sean
 	// numericos
 	private boolean esNumerico() {
+		int anio = 0, 
+			edicion = 0;
 		try {
 			// Se intenta parsear los datos a un Integer
-			Integer.parseInt(this.textFieldEdicion.getText());
-			Integer.parseInt(this.textFieldAnioPublicacion.getText());
+			edicion = Integer.parseInt(this.textFieldEdicion.getText());
+			anio = Integer.parseInt(this.textFieldAnioPublicacion.getText());
 		} catch (NumberFormatException e) {
 			// En caso de no poder parsear los datos se procede a informar al usario
 			lblResultado.setText("Edici\u00F3n y A\u00F1o de publicacion deben ser num\u00e9ricos");
 			lblResultado.setVisible(true);
 			return false;
+		}
+		if(anio<1600 || anio > 2021) {
+			lblResultado.setText("A\u00F1o de publicacion debe estar entre 1600 y 2021");
+			lblResultado.setVisible(true);
+			return false;
+		}
+		
+		if(edicion<1 || edicion > 100) {
+			lblResultado.setText("Edici\u00F3n debe estar entre 1 y 100");
+			lblResultado.setVisible(true);
+			return false;
+		}
+		
+		int[] numbers = {0,1,2,3,4,5,6,7,8,9};
+		for (int i : numbers) {
+			if(titulo.contains(Integer.toString(i))) {
+				lblResultado.setText("Debe ingresar solo letras en campo Título");
+				lblResultado.setVisible(true);
+				return false;
+			}
+			if(autor.contains(Integer.toString(i))) {
+				lblResultado.setText("Debe ingresar solo letras en campo Autor");
+				lblResultado.setVisible(true);
+				return false;
+			}
+			if(editorial.contains(Integer.toString(i))) {
+				lblResultado.setText("Debe ingresar solo letras en campo Editorial");
+				lblResultado.setVisible(true);
+				return false;
+			}
 		}
 		return true;
 	}
